@@ -6,11 +6,8 @@ import librosa
 from pyfiglet import figlet_format
 import time
 import warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings('ignore')
 from KBHit import KBHit
-
-print('\x1b[2J', end='')
-print(figlet_format('LOADING...', font='starwars'))
 
 song_path = 'songs/Powerup! - Jeremy Blake.mp3'
 w, h = 50, 50
@@ -19,6 +16,9 @@ map_empty = ' '
 map_note = '='
 bar_thickness = 3
 left_margin = 20
+
+print('\x1b[2J', end='')
+print(figlet_format('LOADING...', font='starwars'))
 
 y, sr = librosa.load(song_path, duration=None)
 
