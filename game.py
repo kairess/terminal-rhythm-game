@@ -7,13 +7,14 @@ import sys
 from KBHit import KBHit
 
 song_path = 'songs/Powerup! - Jeremy Blake.mp3'
-w, h = 100, 10
-chunk_size = 100 # ms
-map_empty = '-'
+w, h = 50, 50
+chunk_size = 20 # ms
+map_empty = ' '
 map_note = '='
 map_hit = '*'
+bar_thickness = 3
 
-y, sr = librosa.load(song_path, duration=10)
+y, sr = librosa.load(song_path, duration=None)
 
 tempo, beats = librosa.beat.beat_track(y=y, sr=sr, trim=False, units='time')
 beats = beats * 1000 # s to ms
@@ -60,16 +61,16 @@ try:
             map.append(row)
 
         if len(beats) > 0:
-            index = int((beats[0] - time_counter) / max_gap * w)
+            index = max(h - int((beats[0] - time_counter) / max_gap * h), 0)
 
             for y, row in enumerate(map):
-                for x, el in enumerate(row):
-                    if x == index:
-                        try:
-                            for d in range(int(w/10)):
-                                map[y][max(x-d, 0)] = map_note
-                        except:
-                            pass
+                if y == index:
+                    for x, el in enumerate(row):
+                        for d in range(bar_thickness):
+                            try:
+                                map[y+d][x] = map_note
+                            except:
+                                pass
 
             # remove the beat passed by
             if time_counter <= beats[0] < time_counter + chunk_size:
@@ -78,7 +79,6 @@ try:
 
         # print the map
         print('\x1b[H', end='')
-        print('\n' * 10)
         for row in map:
             for el in row:
                 print(el, end='')
