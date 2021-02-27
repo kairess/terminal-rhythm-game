@@ -3,7 +3,6 @@ from pydub.playback import play
 from pydub.utils import make_chunks
 import pyaudio
 import librosa
-import sys
 from KBHit import KBHit
 
 song_path = 'songs/Powerup! - Jeremy Blake.mp3'
