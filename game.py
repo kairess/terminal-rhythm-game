@@ -3,7 +3,14 @@ from pydub.playback import play
 from pydub.utils import make_chunks
 import pyaudio
 import librosa
+from pyfiglet import figlet_format
+import time
+import warnings
+warnings.filterwarnings("ignore")
 from KBHit import KBHit
+
+print('\x1b[2J', end='')
+print(figlet_format('LOADING...', font='starwars'))
 
 song_path = 'songs/Powerup! - Jeremy Blake.mp3'
 w, h = 50, 50
@@ -17,8 +24,8 @@ y, sr = librosa.load(song_path, duration=None)
 
 tempo, beats = librosa.beat.beat_track(y=y, sr=sr, trim=False, units='time')
 beats = beats * 1000 # s to ms
-print(tempo) # 83 beats per second == 1380 ms per beat (83/60*1000)
-print(beats)
+# print(tempo) # 83 beats per second == 1380 ms per beat (83/60*1000)
+# print(beats)
 
 max_gap = 0
 for i in range(len(beats)):
@@ -44,6 +51,13 @@ stream = p.open(
 )
 
 # render
+print('\x1b[2J', end='')
+for i in range(3):
+    print(figlet_format('%s' % (3-i), font='starwars'))
+    time.sleep(1)
+    print('\x1b[2J', end='')
+print(figlet_format('START!', font='starwars'))
+time.sleep(1)
 print('\x1b[2J', end='')
 
 try:
