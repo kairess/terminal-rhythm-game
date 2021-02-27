@@ -11,7 +11,6 @@ w, h = 50, 50
 chunk_size = 20 # ms
 map_empty = ' '
 map_note = '='
-map_hit = '*'
 bar_thickness = 3
 
 y, sr = librosa.load(song_path, duration=None)
