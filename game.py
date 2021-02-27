@@ -12,6 +12,7 @@ chunk_size = 20 # ms
 map_empty = ' '
 map_note = '='
 bar_thickness = 3
+left_margin = 20
 
 y, sr = librosa.load(song_path, duration=None)
 
@@ -55,7 +56,7 @@ try:
         map = []
         for y in range(h):
             row = []
-            for x in range(w):
+            for x in range(w + left_margin):
                 row.append(map_empty)
             map.append(row)
 
@@ -67,7 +68,7 @@ try:
                     for x, el in enumerate(row):
                         for d in range(bar_thickness):
                             try:
-                                map[y+d][x] = map_note
+                                map[y+d][x+left_margin] = map_note
                             except:
                                 pass
 
