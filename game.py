@@ -13,9 +13,10 @@ song_path = 'songs/Powerup! - Jeremy Blake.mp3'
 w, h = 50, 50
 chunk_size = 20 # ms
 map_empty = ' '
+map_line = '-'
 map_note = '='
 bar_thickness = 3
-left_margin = 20
+margin = 20
 
 print('\x1b[2J', end='')
 print(figlet_format('LOADING...', font='starwars'))
@@ -69,19 +70,22 @@ try:
         map = []
         for y in range(h):
             row = []
-            for x in range(w + left_margin):
-                row.append(map_empty)
+            for x in range(w + margin * 2):
+                if y == 0 or y == h - 1:
+                    row.append(map_line)
+                else:
+                    row.append(map_empty)
             map.append(row)
 
         if len(beats) > 0:
             index = max(h - int((beats[0] - time_counter) / max_gap * h), 0)
 
-            for y, row in enumerate(map):
+            for y in range(h):
                 if y == index:
-                    for x, el in enumerate(row):
+                    for x in range(margin, w + margin):
                         for d in range(bar_thickness):
                             try:
-                                map[y+d][x+left_margin] = map_note
+                                map[y+d][x] = map_note
                             except:
                                 pass
 
