@@ -29,12 +29,8 @@ beats = beats * 1000 # s to ms
 avg_gap = (beats[1:] - beats[:-1]).mean()
 
 # ready for playing
-time_counter = 0
-
 song = AudioSegment.from_file(song_path)
-
 p = pyaudio.PyAudio()
-
 stream = p.open(
     format=p.get_format_from_width(song.sample_width),
     channels=song.channels,
@@ -53,6 +49,8 @@ time.sleep(1)
 print('\x1b[2J', end='')
 
 try:
+    time_counter = 0
+
     for chunk in make_chunks(song, chunk_size):
         time_counter += chunk_size
 
