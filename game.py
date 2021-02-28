@@ -25,17 +25,8 @@ y, sr = librosa.load(song_path, duration=None)
 
 tempo, beats = librosa.beat.beat_track(y=y, sr=sr, trim=False, units='time')
 beats = beats * 1000 # s to ms
-# print(tempo) # 83 beats per second == 1380 ms per beat (83/60*1000)
-# print(beats)
 
-max_gap = 0
-for i in range(len(beats)):
-    if i + 1 >= len(beats):
-        break
-
-    gap = beats[i+1] - beats[i]
-    if gap > max_gap:
-        max_gap = gap
+avg_gap = (beats[1:] - beats[:-1]).mean()
 
 # ready for playing
 time_counter = 0
@@ -78,7 +69,7 @@ try:
             map.append(row)
 
         if len(beats) > 0:
-            index = max(h - int((beats[0] - time_counter) / max_gap * h), 0)
+            index = max(h - int((beats[0] - time_counter) / avg_gap * h), 0)
 
             for y in range(h):
                 if y == index:
